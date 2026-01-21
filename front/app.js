@@ -1,12 +1,14 @@
 
 require('dotenv').config();
-require('./config/db');
+require('../config/db');
 
 const session = require('express-session');
 
 
 const express = require('express');
 const path = require('path');
+
+const authRoutes = require('../auth/auth_routes');
 
 
 const app = express(); 
@@ -28,6 +30,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Motor de vistas (si usás EJS)
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+
+app.use(authRoutes);
 
 app.get('/',(req,res)=>{
 res.render('index',{ titulo:"pagina de inicio" })
