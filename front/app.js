@@ -5,11 +5,12 @@ require('../config/db');
 const session = require('express-session');
 
 
+
 const express = require('express');
 const path = require('path');
 
 const authRoutes = require('../auth/auth_routes');
-
+const dashboardRoutes = require('../dashboard/dashboard_routes');
 
 const app = express(); 
 
@@ -32,6 +33,8 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 app.use(authRoutes);
+app.use(dashboardRoutes);
+
 
 app.get('/',(req,res)=>{
 res.render('index',{ titulo:"pagina de inicio" })
