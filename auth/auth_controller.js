@@ -49,16 +49,20 @@ const authController = {
                 club: user.club_id
             };
 
-            // 5. Redirigir según rol
+           // 5. Redirigir según rol
             if (user.rol_id === 1) {
-                return res.redirect('/dashboard/admin');
+             return res.redirect('/dashboard/admin');
             }
 
             if (user.rol_id === 2) {
-                return res.redirect('/dashboard/club');
+         return res.redirect('/dashboard/club');
             }
 
-            return res.redirect('/dashboard');
+        if (user.rol_id === 3) {
+         return res.redirect('/dashboard/viewer');
+        }
+
+        return res.send("Rol no reconocido");
 
         } catch (error) {
             console.error(error);

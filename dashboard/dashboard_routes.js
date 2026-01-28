@@ -1,26 +1,27 @@
 const express = require('express');
 const router = express.Router();
+
 const dashboardController = require('./dashboard_controller');
 const authMiddleware = require('../auth/auth_middleware');
 
-// ADMIN
+// ADMIN SISTEMA
 router.get('/dashboard/admin',
-    authMiddleware.isAuthenticated,
-    authMiddleware.isAdmin,
+    authMiddleware.verificarLogin,
+    authMiddleware.soloAdminSistema,
     dashboardController.adminDashboard
 );
 
-// CLUB
+// ADMIN CLUB
 router.get('/dashboard/club',
-    authMiddleware.isAuthenticated,
-    authMiddleware.isClub,
+    authMiddleware.verificarLogin,
+    authMiddleware.soloAdminClub,
     dashboardController.clubDashboard
 );
 
 // VIEWER
 router.get('/dashboard/viewer',
-    authMiddleware.isAuthenticated,
-    authMiddleware.isViewer,
+    authMiddleware.verificarLogin,
+    authMiddleware.soloViewer,
     dashboardController.viewerDashboard
 );
 

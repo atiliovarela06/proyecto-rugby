@@ -7,9 +7,19 @@
 </head>
 <body>
     <h1>Dashboard ADMIN</h1>
-<p>Bienvenido <%= user.email %></p>
+<p>Bienvenido <%= user.nombre %></p>
 <a href="/logout">Cerrar sesión</a>
 
+<hr>
+
+    <h2>Acciones disponibles</h2>
+
+    <ul>
+        <li><a href="/admin/clubes">Administrar clubes</a></li>
+        <li><a href="/admin/usuarios">Administrar usuarios</a></li>
+        <li><a href="/admin/torneos">Administrar torneos</a></li>
+        <li><a href="/logout">Cerrar sesión</a></li>
+    </ul>
 
 </body>
 </html>
