@@ -7,6 +7,7 @@ const path = require('path');
 
 const authRoutes = require('../auth/auth_routes');
 const dashboardRoutes = require('../dashboard/dashboard_routes');
+const adminRoutes = require('../admin/admin_routes');
 
 const app = express();
 
@@ -31,6 +32,7 @@ app.set('views', path.join(__dirname, 'views'));
 // Rutas
 app.use(authRoutes);
 app.use(dashboardRoutes);
+app.use(adminRoutes);
 
 // Home
 app.get('/', (req, res) => {

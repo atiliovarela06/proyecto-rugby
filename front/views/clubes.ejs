@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Clubes</title>
+</head>
+<body>
+
+    <h1>Listado de Clubes</h1>
+
+    <p>Bienvenido: <%= user.nombre %></p>
+
+    <hr>
+
+    <a href="/admin/clubes/nuevo">
+    Crear nuevo club
+</a>
+
+    <ul>
+        <% clubes.forEach(club => { %>
+            <li><%= club.nombre %></li>
+        <% }) %>
+    </ul>
+
+    <hr>
+
+    <a href="/dashboard/admin">Volver al panel</a>
+
+</body>
+</html>
+
+ 
