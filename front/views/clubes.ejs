@@ -12,18 +12,33 @@
 
     <hr>
 
-    <a href="/admin/clubes/nuevo">
-    Crear nuevo club
-</a>
+    <!-- SOLO ADMIN SISTEMA puede crear clubes -->
+    <% if (user.rol === 1) { %>
+        <a href="/clubes/nuevo">
+             Crear nuevo club
+        </a>
+        <hr>
+    <% } %>
 
     <ul>
-        <% clubes.forEach(club => { %>
-            <li><%= club.nombre %></li>
-        <% }) %>
-    </ul>
+    <% clubes.forEach(club => { %>
+        <li>
+            <%= club.nombre %>
+        
+            <% if (user.rol === 1) { %>
+                | <a href="/clubes/editar/<%= club.id %>">Editar</a>
 
-    <hr>
-
+                <form action="/clubes/eliminar/<%= club.id %>" method="POST" style="display:inline;">
+                    <button type="submit" onclick="return confirm('¿Seguro que querés borrar este club?')">
+                        Borrar
+                    </button>
+                </form>
+            <% } %>
+            
+        </li>
+    <% }) %>
+    
+</ul>
     <a href="/dashboard/admin">Volver al panel</a>
 
 </body>

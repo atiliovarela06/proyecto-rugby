@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Club</title>
+</head>
+<body>
+
+    <h1>Editar Club</h1>
+
+    <p>Estás editando el club: <strong><%= club.nombre %></strong></p>
+
+    <hr>
+
+    <form action="/clubes/editar/<%= club.id %>" method="POST">
+
+        <label>Nombre del club:</label>
+        <input type="text" name="nombre" value="<%= club.nombre %>" required>
+
+        <br><br>
+
+        <button type="submit">Guardar cambios</button>
+
+    </form>
+
+    <hr>
+
+    <a href="/admin/clubes">⬅ Volver al listado</a>
+
+</body>
+</html>
