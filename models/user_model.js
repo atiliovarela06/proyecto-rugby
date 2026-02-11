@@ -1,10 +1,18 @@
 const db = require('../config/db');
 const bcrypt = require('bcryptjs');
 
+// ✅ MAPEO DE ROLES
+const ROLES = {
+    admin_sistema: 1,
+    admin_club: 2,
+    viewer: 3
+};
+
 const User = {
 
     // Buscar usuario por email (login)
     findByEmail: async (email) => {
+        email = email.toLowerCase();
         const [rows] = await db.promise().query(
             'SELECT * FROM usuarios WHERE email = ? LIMIT 1',
             [email]
@@ -14,6 +22,17 @@ const User = {
 
     // Crear usuario
     create: async (user) => {
+
+        let rol_id = user.rol_id;
+
+        if (!rol_id && user.rol) {
+            rol_id = ROLES[user.rol];
+        }
+
+        if (!rol_id) {
+            throw new Error('Rol inválido');
+        }
+
         const passwordHash = await bcrypt.hash(user.password, 10);
 
         const [result] = await db.promise().query(
@@ -24,7 +43,7 @@ const User = {
                 user.nombre,
                 user.email,
                 passwordHash,
-                user.rol_id,
+                rol_id,
                 user.club_id || null,
                 1
             ]
@@ -33,7 +52,21 @@ const User = {
         return result.insertId;
     },
 
-    // Buscar usuario por ID (sesión)
+    // ✅ NUEVA FUNCIÓN — actualizar rol
+    updateRol: async (id, rol_id, club_id) => {
+
+        await db.promise().query(
+            `UPDATE usuarios 
+             SET rol_id = ?, club_id = ?
+             WHERE id = ?`,
+            [
+                rol_id,
+                club_id || null,
+                id
+            ]
+        );
+    },
+
     findById: async (id) => {
         const [rows] = await db.promise().query(
             `SELECT id, nombre, email, rol_id, club_id 
@@ -44,15 +77,12 @@ const User = {
         return rows[0];
     },
 
-    // Listar todos (admin sistema)
     getAll: async () => {
         const [rows] = await db.promise().query(
             'SELECT id, nombre, email, rol_id, club_id, activo FROM usuarios'
         );
         return rows;
     }
-
 };
 
 module.exports = User;
-

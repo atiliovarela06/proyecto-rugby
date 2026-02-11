@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Jugador</title>
+</head>
+<body>
+
+<h1>Editar jugador</h1>
+
+<form method="POST" action="/admin/club/jugadores/editar/<%= jugador.id %>">
+
+    <label>DNI</label><br>
+    <input type="text" name="dni" value="<%= jugador.dni %>" required>
+    <br><br>
+
+    <label>Nombre</label><br>
+    <input type="text" name="nombre" value="<%= jugador.nombre %>" required>
+    <br><br>
+
+    <label>Apellido</label><br>
+    <input type="text" name="apellido" value="<%= jugador.apellido %>" required>
+    <br><br>
+
+    <label>Fecha nacimiento</label><br>
+    <input
+        type="date"
+        name="fecha_nacimiento"
+        value="<%= new Date(jugador.fecha_nacimiento).toISOString().split('T')[0] %>"
+        required
+    >
+    <br><br>
+
+    <label>Posición</label><br>
+    <input type="text" name="posicion" value="<%= jugador.posicion %>">
+    <br><br>
+
+    <label>Categoría</label><br>
+    <select name="categoria_id" required>
+        <% categorias.forEach(c => { %>
+            <option
+                value="<%= c.id %>"
+                <%= c.id === jugador.categoria_id ? 'selected' : '' %>
+            >
+                <%= c.nombre %>
+            </option>
+        <% }) %>
+    </select>
+    <br><br>
+
+    <!-- IMPORTANTE: checkbox -->
+    <label>
+        <input type="checkbox" name="activo" value="1" <%= jugador.activo ? 'checked' : '' %>>
+        Activo
+    </label>
+    <br><br>
+
+    <button type="submit">💾 Guardar cambios</button>
+</form>
+
+<hr>
+<a href="/admin/club/jugadores">⬅ Volver</a>
+
+</body>
+</html>

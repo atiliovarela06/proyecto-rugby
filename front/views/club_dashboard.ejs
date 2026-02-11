@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel Admin Club</title>
+</head>
+<body>
+
+    <h1>Panel del Administrador del Club</h1>
+
+    <p>Bienvenido: <%= user.nombre %></p>
+
+    <hr>
+
+    <a href="/mi-club">Ver mi club</a>
+
+    <br><br>
+
+    <a href="/logout">Cerrar sesión</a>
+
+
+    <h2>Panel Admin Club</h2>
+
+<p>Club ID: <%= user.club %></p>
+
+<hr>
+
+<ul>
+    <li>
+        <a href="/admin/club/jugadores">Gestionar jugadores</a>
+    </li>
+</ul>
+
+<hr>
+
+<a href="/logout">Cerrar sesión</a>
+</body>
+</html>

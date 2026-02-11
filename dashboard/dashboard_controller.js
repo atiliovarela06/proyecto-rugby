@@ -5,7 +5,7 @@ exports.adminDashboard = (req, res) => {
 };
 
 exports.clubDashboard = (req, res) => {
-    res.render('club', {
+    res.render('club_dashboard', {
         user: req.session.user
     });
 };

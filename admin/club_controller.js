@@ -56,3 +56,39 @@ exports.eliminarClub = async (req, res) => {
 
     res.redirect('/admin/clubes');
 };
+
+exports.verMiClub = async (req, res) => {
+
+    const clubId = req.session.user.club;
+
+    const club = await Club.getById(clubId);
+
+    res.render('mi_club', {
+        club,
+        user: req.session.user
+    });
+};
+
+
+// ✅ ESTA ES LA FUNCIÓN QUE FALTABA (NO BORRA NADA)
+exports.verClub = async (req, res) => {
+    try {
+
+        const { id } = req.params;
+
+        const club = await Club.getById(id);
+
+        if (!club) {
+            return res.send('Club no encontrado');
+        }
+
+        res.render('club_ver', {
+            club,
+            user: req.session.user
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.send('Error al cargar club');
+    }
+};

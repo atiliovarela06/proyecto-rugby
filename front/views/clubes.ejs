@@ -6,42 +6,43 @@
 </head>
 <body>
 
-    <h1>Listado de Clubes</h1>
+<h1>Listado de Clubes</h1>
 
-    <p>Bienvenido: <%= user.nombre %></p>
+<p>Bienvenido: <%= user.nombre %></p>
 
+<hr>
+
+<% if (user.rol_id === 1) { %>
+    <a href="/admin/clubes/nuevo">
+        Crear nuevo club
+    </a>
     <hr>
+<% } %>
 
-    <!-- SOLO ADMIN SISTEMA puede crear clubes -->
-    <% if (user.rol === 1) { %>
-        <a href="/clubes/nuevo">
-             Crear nuevo club
-        </a>
-        <hr>
-    <% } %>
+<ul>
+<% clubes.forEach(club => { %>
+    <li>
+        <%= club.nombre %>
 
-    <ul>
-    <% clubes.forEach(club => { %>
-        <li>
-            <%= club.nombre %>
-        
-            <% if (user.rol === 1) { %>
-                | <a href="/clubes/editar/<%= club.id %>">Editar</a>
+        <% if (user.rol_id === 1) { %>
 
-                <form action="/clubes/eliminar/<%= club.id %>" method="POST" style="display:inline;">
-                    <button type="submit" onclick="return confirm('¿Seguro que querés borrar este club?')">
-                        Borrar
-                    </button>
-                </form>
-            <% } %>
-            
-        </li>
-    <% }) %>
-    
+            | <a href="/admin/clubes/editar/<%= club.id %>">
+                Editar
+            </a>
+
+            <form action="/admin/clubes/eliminar/<%= club.id %>" method="POST" style="display:inline;">
+                <button type="submit" onclick="return confirm('¿Seguro que querés borrar este club?')">
+                    Borrar
+                </button>
+            </form>
+
+        <% } %>
+
+    </li>
+<% }) %>
 </ul>
-    <a href="/dashboard/admin">Volver al panel</a>
+
+<a href="/dashboard/admin">Volver al panel</a>
 
 </body>
 </html>
-
- 

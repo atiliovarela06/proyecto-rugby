@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Jugadores</title>
+</head>
+<body>
+
+<h1>Jugadores del Club</h1>
+
+<p>Administrador: <%= user.nombre %></p>
+
+<hr>
+
+<% if (user.rol_id === 1 || user.rol_id === 2) { %>
+    <a href="/admin/club/jugadores/nuevo">➕ Agregar jugador</a>
+<% } %>
+
+<hr>
+
+<% if (jugadores.length === 0) { %>
+    <p>No hay jugadores cargados.</p>
+<% } else { %>
+    <ul>
+        <% jugadores.forEach(j => { %>
+            <li>
+                <strong><%= j.nombre %> <%= j.apellido %></strong>
+                — <%= j.categoria %>
+
+                <% if (user.rol_id === 1 || user.rol_id === 2) { %>
+                    <!-- BOTÓN EDITAR -->
+                    <a href="/admin/club/jugadores/editar/<%= j.id %>">
+                        ✏️ Editar
+                    </a>
+                <% } %>
+            </li>
+        <% }) %>
+    </ul>
+<% } %>
+
+<hr>
+
+<a href="/dashboard/club">⬅ Volver al panel</a>
+
+</body>
+</html>

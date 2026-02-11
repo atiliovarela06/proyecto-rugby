@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Nuevo Jugador</title>
+</head>
+<body>
+
+<h1>Agregar jugador</h1>
+
+<p>Usuario: <%= user.nombre %></p>
+
+<hr>
+
+<form action="/admin/club/jugadores/nuevo" method="POST">
+
+    <label>DNI:</label><br>
+    <input type="text" name="dni" required>
+    <br><br>
+
+    <label>Nombre:</label><br>
+    <input type="text" name="nombre" required>
+    <br><br>
+
+    <label>Apellido:</label><br>
+    <input type="text" name="apellido" required>
+    <br><br>
+
+    <label>Fecha de nacimiento:</label><br>
+    <input type="date" name="fecha_nacimiento" required>
+    <br><br>
+
+    <label>Posición:</label><br>
+    <input type="text" name="posicion" required>
+    <br><br>
+
+    <label>Categoría:</label><br>
+    <select name="categoria_id" required>
+        <% if (categorias && categorias.length > 0) { %>
+            <% categorias.forEach(c => { %>
+                <option value="<%= c.id %>">
+                    <%= c.nombre %>
+                </option>
+            <% }) %>
+        <% } else { %>
+            <option value="">No hay categorías</option>
+        <% } %>
+    </select>
+
+    <br><br>
+
+    <label>
+        <input type="checkbox" name="activo" checked>
+        Jugador activo
+    </label>
+
+    <br><br>
+
+    <button type="submit">Guardar</button>
+</form>
+
+<hr>
+
+<a href="/admin/club/jugadores">Volver a jugadores</a>
+
+</body>
+</html>

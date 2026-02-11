@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Cambiar Rol</title>
+</head>
+<body>
+
+<h1>Cambiar Rol de Usuario</h1>
+
+<p><strong><%= usuario.nombre %></strong></p>
+
+<form method="POST">
+
+<label>Rol:</label>
+
+<select name="rol_id">
+    <option value="1">Admin Sistema</option>
+    <option value="2">Admin Club</option>
+    <option value="3">Viewer</option>
+</select>
+
+<br><br>
+
+<label>Club (solo si es admin club)</label>
+
+<select name="club_id">
+    <option value="">Sin club</option>
+
+    <% clubes.forEach(c => { %>
+        <option value="<%= c.id %>"><%= c.nombre %></option>
+    <% }) %>
+
+</select>
+
+<br><br>
+
+<button type="submit">Guardar</button>
+
+</form>
+
+</body>
+</html>

@@ -5,10 +5,7 @@ const clubController = require('./club_controller');
 const authMiddleware = require('../auth/auth_middleware');
 
 
-
-  // LISTAR CLUBES (TODOS los usuarios logueados)
-
-
+// LISTAR CLUBES (todos logueados)
 router.get(
     '/clubes',
     authMiddleware.verificarLogin,
@@ -16,9 +13,7 @@ router.get(
 );
 
 
-   //CREAR CLUB (SOLO ADMIN SISTEMA rol=1)
-
-
+// CREAR CLUB (solo admin sistema)
 router.get(
     '/clubes/nuevo',
     authMiddleware.verificarLogin,
@@ -34,10 +29,7 @@ router.post(
 );
 
 
-
-   //EDITAR CLUB (SOLO ADMIN SISTEMA rol=1)
-
-
+// EDITAR CLUB
 router.get(
     '/clubes/editar/:id',
     authMiddleware.verificarLogin,
@@ -53,10 +45,7 @@ router.post(
 );
 
 
-
-  // ELIMINAR CLUB (SOLO ADMIN SISTEMA rol=1)
-
-
+// ELIMINAR CLUB
 router.post(
     '/clubes/eliminar/:id',
     authMiddleware.verificarLogin,
@@ -64,6 +53,21 @@ router.post(
     clubController.eliminarClub
 );
 
-module.exports = router;
 
- 
+// ADMIN CLUB → ver su club
+router.get(
+    '/mi-club',
+    authMiddleware.verificarLogin,
+    authMiddleware.soloAdminClub,
+    clubController.verMiClub
+);
+
+
+// VER UN CLUB (viewer también)
+router.get(
+    '/clubes/:id',
+    authMiddleware.verificarLogin,
+    clubController.verClub
+);
+
+module.exports = router;

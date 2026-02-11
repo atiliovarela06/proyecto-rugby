@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Usuarios</title>
+</head>
+<body>
+
+<h1>Administrar Usuarios</h1>
+
+<p>Admin: <%= user.nombre %></p>
+
+<hr>
+
+<a href="/admin/usuarios/nuevo">
+    ➕ Crear Admin de Club
+</a>
+
+<hr>
+
+<ul>
+<% usuarios.forEach(u => { %>
+    <li>
+        <strong><%= u.nombre %></strong>
+        — <%= u.email %>
+        — Rol: <%= u.rol_id %>
+
+        | <a href="/admin/usuarios/rol/<%= u.id %>">
+            Cambiar rol
+          </a>
+    </li>
+<% }) %>
+</ul>
+
+<hr>
+
+<a href="/dashboard/admin">Volver al panel</a>
+
+</body>
+</html>

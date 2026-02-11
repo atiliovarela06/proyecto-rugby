@@ -1,0 +1,26 @@
+<h1>Crear administrador de club</h1>
+
+<form method="POST" action="/admin/usuarios/nuevo">
+
+    <label>Nombre</label><br>
+    <input type="text" name="nombre" required><br><br>
+
+    <label>Email</label><br>
+    <input type="email" name="email" required><br><br>
+
+    <label>Contraseña</label><br>
+    <input type="password" name="password" required><br><br>
+
+    <label>Club</label><br>
+    <select name="club_id" required>
+        <% clubes.forEach(club => { %>
+            <option value="<%= club.id %>">
+                <%= club.nombre %>
+            </option>
+        <% }) %>
+    </select><br><br>
+
+    <button type="submit">Crear admin de club</button>
+</form>
+
+<a href="/admin/usuarios">Volver</a>
