@@ -1,0 +1,41 @@
+<h1>Editar Equipo</h1>
+
+<form method="POST">
+
+<label>Club</label>
+<select name="club_id">
+
+<% clubes.forEach(c => { %>
+<option value="<%= c.id %>"
+<%= c.id === equipo.club_id ? 'selected' : '' %>>
+<%= c.nombre %>
+</option>
+<% }) %>
+
+</select>
+
+<br><br>
+
+<label>Categoria</label>
+<input name="categoria"
+value="<%= equipo.categoria %>">
+
+<br><br>
+
+<label>Division</label>
+<select name="division_id">
+
+<% divisiones.forEach(d => { %>
+<option value="<%= d.id %>"
+<%= d.id === equipo.division_id ? 'selected' : '' %>>
+<%= d.nombre %>
+</option>
+<% }) %>
+
+</select>
+
+<br><br>
+
+<button>Guardar</button>
+
+</form>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Nuevo Torneo</title>
+</head>
+<body>
+
+<h1>Crear Torneo</h1>
+
+<form method="POST" action="/admin/torneos/nuevo">
+
+<label>Nombre</label>
+<input type="text" name="nombre" required>
+
+<br><br>
+
+<label>Formato</label>
+<select name="formato">
+    <option value="liga">Liga</option>
+    <option value="copa">Copa</option>
+</select>
+
+<br><br>
+
+<label>Temporada</label>
+<input type="text" name="temporada" placeholder="2025" required>
+
+<br><br>
+
+<button type="submit">Crear torneo</button>
+
+</form>
+
+<br>
+
+<a href="/admin/torneos">Volver</a>
+
+</body>
+</html>

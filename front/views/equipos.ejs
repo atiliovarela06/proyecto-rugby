@@ -1,0 +1,27 @@
+<h1>Equipos</h1>
+
+<a href="/admin/equipos/nuevo">
+    ➕ Crear equipo
+</a>
+
+<hr>
+
+<ul>
+<% equipos.forEach(e => { %>
+
+<li>
+    <strong><%= e.club %></strong>
+    — <%= e.categoria %>
+    — <%= e.division %>
+
+    | <a href="/admin/equipos/editar/<%= e.id %>">Editar</a>
+
+    <form action="/admin/equipos/eliminar/<%= e.id %>" method="POST" style="display:inline;">
+        <button>Eliminar</button>
+    </form>
+</li>
+
+<% }) %>
+</ul>
+
+<a href="/dashboard/admin">Volver</a>

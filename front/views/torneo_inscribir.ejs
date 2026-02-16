@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Inscribir Equipos</title>
+</head>
+<body>
+
+<h1>Inscribir equipos en <%= torneo.nombre %></h1>
+
+<form method="POST">
+
+<% equiposDisponibles.forEach(e => { %>
+
+    <label>
+        <input type="checkbox" name="equipos[]" value="<%= e.id %>"
+        <%= equiposActuales.some(x => x.id === e.id) ? 'checked' : '' %>>
+
+        <%= e.club %> - <%= e.categoria %>
+    </label>
+
+    <br>
+
+<% }) %>
+
+<br>
+
+<button type="submit">Guardar</button>
+
+</form>
+
+<hr>
+
+<a href="/admin/torneos/<%= torneo.id %>">Volver</a>
+
+</body>
+</html>

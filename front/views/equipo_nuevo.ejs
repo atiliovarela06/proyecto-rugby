@@ -1,0 +1,38 @@
+<h1>Nuevo Equipo</h1>
+
+<form method="POST">
+
+<label>Club</label>
+<select name="club_id">
+
+<% clubes.forEach(c => { %>
+<option value="<%= c.id %>">
+<%= c.nombre %>
+</option>
+<% }) %>
+
+</select>
+
+<br><br>
+
+<label>Categoria</label>
+<input name="categoria" placeholder="Primera">
+
+<br><br>
+
+<label>Division</label>
+<select name="division_id">
+
+<% divisiones.forEach(d => { %>
+<option value="<%= d.id %>">
+<%= d.nombre %>
+</option>
+<% }) %>
+
+</select>
+
+<br><br>
+
+<button>Crear</button>
+
+</form>

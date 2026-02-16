@@ -12,32 +12,45 @@
 
 <form method="POST">
 
-<label>Rol:</label>
+    <label>Rol:</label>
+    <select name="rol_id">
+        <option value="1" <%= usuario.rol_id == 1 ? 'selected' : '' %>>
+            Admin Sistema
+        </option>
+        <option value="2" <%= usuario.rol_id == 2 ? 'selected' : '' %>>
+            Admin Club
+        </option>
+        <option value="3" <%= usuario.rol_id == 3 ? 'selected' : '' %>>
+            Viewer
+        </option>
+    </select>
 
-<select name="rol_id">
-    <option value="1">Admin Sistema</option>
-    <option value="2">Admin Club</option>
-    <option value="3">Viewer</option>
-</select>
+    <br><br>
 
-<br><br>
+    <label>Club (solo si es admin club)</label>
 
-<label>Club (solo si es admin club)</label>
+    <select name="club_id">
+        <option value="">Sin club</option>
 
-<select name="club_id">
-    <option value="">Sin club</option>
+        <% if (clubes && clubes.length > 0) { %>
+            <% clubes.forEach(c => { %>
+                <option value="<%= c.id %>" 
+                    <%= usuario.club_id == c.id ? 'selected' : '' %>>
+                    <%= c.nombre %>
+                </option>
+            <% }) %>
+        <% } %>
+    </select>
 
-    <% clubes.forEach(c => { %>
-        <option value="<%= c.id %>"><%= c.nombre %></option>
-    <% }) %>
+    <br><br>
 
-</select>
-
-<br><br>
-
-<button type="submit">Guardar</button>
+    <button type="submit">Guardar</button>
 
 </form>
+
+<hr>
+
+<a href="/admin/usuarios">⬅ Volver</a>
 
 </body>
 </html>

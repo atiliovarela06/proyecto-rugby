@@ -1,49 +1,55 @@
 const express = require('express');
 const router = express.Router();
 
-const userController = require('./user_controller');
+const equipoController = require('./equipo_controller');
 const authMiddleware = require('../auth/auth_middleware');
 
-// REGISTRO VIEWER
-router.get('/usuarios/registro', userController.formRegistro);
-router.post('/usuarios/registro', userController.crearViewer);
-
-// ADMIN SISTEMA
-
+// LISTAR
 router.get(
-    '/usuarios',
+    '/equipos',
     authMiddleware.verificarLogin,
     authMiddleware.soloAdminSistema,
-    userController.listarUsuarios
+    equipoController.listarEquipos
 );
 
+// FORM NUEVO
 router.get(
-    '/usuarios/nuevo',
+    '/equipos/nuevo',
     authMiddleware.verificarLogin,
     authMiddleware.soloAdminSistema,
-    userController.formNuevoAdminClub
+    equipoController.formNuevoEquipo
 );
 
+// CREAR
 router.post(
-    '/usuarios/nuevo',
+    '/equipos/nuevo',
     authMiddleware.verificarLogin,
     authMiddleware.soloAdminSistema,
-    userController.crearAdminClub
+    equipoController.crearEquipo
 );
 
-// ✅ EDITAR ROL
+// FORM EDITAR
 router.get(
-    '/usuarios/rol/:id',
+    '/equipos/editar/:id',
     authMiddleware.verificarLogin,
     authMiddleware.soloAdminSistema,
-    userController.formEditarRol
+    equipoController.formEditarEquipo
 );
 
+// GUARDAR EDICIÓN
 router.post(
-    '/usuarios/rol/:id',
+    '/equipos/editar/:id',
     authMiddleware.verificarLogin,
     authMiddleware.soloAdminSistema,
-    userController.actualizarRol
+    equipoController.actualizarEquipo
+);
+
+// ELIMINAR
+router.post(
+    '/equipos/eliminar/:id',
+    authMiddleware.verificarLogin,
+    authMiddleware.soloAdminSistema,
+    equipoController.eliminarEquipo
 );
 
 module.exports = router;

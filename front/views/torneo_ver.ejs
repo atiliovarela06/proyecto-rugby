@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Torneo</title>
+</head>
+<body>
+
+<h1><%= torneo.nombre %></h1>
+
+<p>Temporada: <%= torneo.temporada %></p>
+
+<hr>
+
+<h2>Equipos inscriptos</h2>
+
+<ul>
+<% equipos.forEach(e => { %>
+    <li><%= e.club %> - <%= e.categoria %></li>
+<% }) %>
+</ul>
+
+<hr>
+
+<a href="/admin/torneos/<%= torneo.id %>/inscribir">
+Inscribir equipos
+</a>
+
+<br><br>
+
+<form method="POST" action="/admin/torneos/<%= torneo.id %>/generar-fixture">
+    <button type="submit">Generar Fixture</button>
+</form>
+
+<br>
+
+<a href="/admin/torneos/<%= torneo.id %>/fixture">
+Ver Fixture
+</a>
+
+<hr>
+
+<a href="/admin/torneos">Volver</a>
+
+</body>
+</html>

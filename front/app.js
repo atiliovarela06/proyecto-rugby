@@ -12,6 +12,10 @@ const adminRoutes = require('../admin/admin_routes');
 const clubRoutes = require('../admin/club_routes');
 const jugadorRoutes = require('../admin/jugador_routes');
 const userRoutes = require('../admin/user_routes');
+const torneoRoutes = require('../admin/torneo_routes');
+const equipoRoutes = require('../admin/equipo_routes');
+
+
 
 const app = express();
 
@@ -36,12 +40,14 @@ app.set('views', path.join(__dirname, 'views'));
 // Rutas
 app.use(authRoutes);
 app.use(dashboardRoutes);
-app.use(adminRoutes);
-app.use(userRoutes);
+app.use('/admin', adminRoutes);
+app.use('/admin', userRoutes);
+app.use('/admin', torneoRoutes);
+app.use('/admin', equipoRoutes);
 
 // ✅ SOLO admin club (rol 2)
-app.use('/admin/club', clubRoutes);
-app.use('/admin/club', jugadorRoutes);
+app.use( clubRoutes);
+app.use('/admin', jugadorRoutes);
 
 // Home
 app.get('/', (req, res) => {

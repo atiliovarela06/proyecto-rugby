@@ -8,7 +8,7 @@ const authMiddleware = {
     },
 
     soloAdminSistema: (req, res, next) => {
-        if (req.session.user.rol_id !== 1) {
+        if (Number(req.session.user.rol_id) !== 1) {
             return res.status(403).send('Acceso denegado');
         }
         next();
