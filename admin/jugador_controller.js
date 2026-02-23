@@ -56,7 +56,7 @@ const crearJugador = async (req, res) => {
             activo: activo ? 1 : 0
         });
 
-        res.redirect('/admin/club/jugadores');
+        res.redirect('/admin/jugadores');
     } catch (error) {
         console.error('ERROR MYSQL', error.sqlMessage || error);
         res.send(error.sqlMessage||'Error al crear jugador');
@@ -111,7 +111,7 @@ const editarJugador = async (req, res) => {
             activo: activo ? 1 : 0
         });
 
-        res.redirect('/admin/club/jugadores');
+        res.redirect('/admin/jugadores');
     } catch (error) {
         console.error(error);
         res.send('Error al editar jugador');

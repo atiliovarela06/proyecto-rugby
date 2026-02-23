@@ -7,7 +7,6 @@
 <body>
 
 <h1><%= torneo.nombre %></h1>
-
 <p>Temporada: <%= torneo.temporada %></p>
 
 <hr>
@@ -16,11 +15,14 @@
 
 <ul>
 <% equipos.forEach(e => { %>
-    <li><%= e.club %> - <%= e.categoria %></li>
+<li><%= e.club %> - <%= e.categoria %></li>
 <% }) %>
 </ul>
 
 <hr>
+
+<!-- SOLO ADMIN SISTEMA -->
+<% if (Number(user.rol_id) === 1) { %>
 
 <a href="/admin/torneos/<%= torneo.id %>/inscribir">
 Inscribir equipos
@@ -29,14 +31,60 @@ Inscribir equipos
 <br><br>
 
 <form method="POST" action="/admin/torneos/<%= torneo.id %>/generar-fixture">
-    <button type="submit">Generar Fixture</button>
+<button type="submit">Generar Fixture</button>
 </form>
 
 <br>
 
+<% } %>
+
+<!-- TODOS -->
 <a href="/admin/torneos/<%= torneo.id %>/fixture">
 Ver Fixture
 </a>
+
+<hr>
+
+<h2>Tabla de posiciones</h2>
+
+<% if (!tabla || tabla.length === 0) { %>
+
+<p>No hay tabla todavía</p>
+
+<% } else { %>
+
+<table border="1" cellpadding="6">
+<tr>
+<th>Club</th>
+<th>Cat</th>
+<th>PJ</th>
+<th>PG</th>
+<th>PE</th>
+<th>PP</th>
+<th>PF</th>
+<th>PC</th>
+<th>DIF</th>
+<th>PTS</th>
+</tr>
+
+<% tabla.forEach(t => { %>
+<tr>
+<td><%= t.club %></td>
+<td><%= t.categoria %></td>
+<td><%= t.pj %></td>
+<td><%= t.pg %></td>
+<td><%= t.pe %></td>
+<td><%= t.pp %></td>
+<td><%= t.pf %></td>
+<td><%= t.pc %></td>
+<td><%= t.dif %></td>
+<td><%= t.pts %></td>
+</tr>
+<% }) %>
+
+</table>
+
+<% } %>
 
 <hr>
 

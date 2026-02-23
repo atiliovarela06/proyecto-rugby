@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Cargar Resultado</title>
+</head>
+<body>
+
+<h1>Cargar resultado</h1>
+
+<p>
+<strong>
+<%= partido.local_club %> (<%= partido.local_categoria %>)
+vs
+<%= partido.visitante_club %> (<%= partido.visitante_categoria %>)
+</strong>
+</p>
+
+<form method="POST">
+
+<label>Puntos Local</label>
+<input type="number" name="puntos_local"
+value="<%= resultado ? resultado.puntos_local : '' %>"
+required>
+
+<br><br>
+
+<label>Puntos Visitante</label>
+<input type="number" name="puntos_visitante"
+value="<%= resultado ? resultado.puntos_visitante : '' %>"
+required>
+
+<br><br>
+
+<button type="submit">Guardar resultado</button>
+
+</form>
+
+</body>
+</html>

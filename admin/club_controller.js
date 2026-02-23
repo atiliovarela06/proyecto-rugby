@@ -6,7 +6,7 @@ exports.listarClubes = async (req, res) => {
 
     res.render('clubes', {
         clubes,
-        user: req.session.user // importante para mostrar nombre y rol
+        user: req.session.user
     });
 };
 
@@ -20,16 +20,13 @@ exports.formNuevoClub = (req, res) => {
 // CREAR CLUB
 exports.crearClub = async (req, res) => {
     const { nombre } = req.body;
-
     await Club.create(nombre);
-
     res.redirect('/admin/clubes');
 };
 
 // FORM EDITAR CLUB
 exports.formEditarClub = async (req, res) => {
     const { id } = req.params;
-
     const club = await Club.getById(id);
 
     res.render('club_editar', {
@@ -38,28 +35,34 @@ exports.formEditarClub = async (req, res) => {
     });
 };
 
-// GUARDAR CAMBIOS EDITAR
+// GUARDAR CAMBIOS
 exports.actualizarClub = async (req, res) => {
     const { id } = req.params;
     const { nombre } = req.body;
 
     await Club.update(id, nombre);
-
     res.redirect('/admin/clubes');
 };
 
-// ELIMINAR CLUB
+// ELIMINAR
 exports.eliminarClub = async (req, res) => {
     const { id } = req.params;
-
     await Club.delete(id);
-
     res.redirect('/admin/clubes');
 };
 
+
+// ✅ FIX IMPORTANTE AQUÍ
 exports.verMiClub = async (req, res) => {
 
-    const clubId = req.session.user.club;
+    const clubId = req.session.user.club_id; // 🔥 antes estaba mal
+
+    if (!clubId) {
+        return res.render('mi_club', {
+            club: null,
+            user: req.session.user
+        });
+    }
 
     const club = await Club.getById(clubId);
 
@@ -70,12 +73,11 @@ exports.verMiClub = async (req, res) => {
 };
 
 
-// ✅ ESTA ES LA FUNCIÓN QUE FALTABA (NO BORRA NADA)
+// VER CLUB
 exports.verClub = async (req, res) => {
     try {
 
         const { id } = req.params;
-
         const club = await Club.getById(id);
 
         if (!club) {

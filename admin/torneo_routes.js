@@ -4,9 +4,8 @@ const router = express.Router();
 const torneoController = require('./torneo_controller');
 const authMiddleware = require('../auth/auth_middleware');
 
-
 // =========================
-// 🔥 LISTAR TORNEOS
+// LISTAR TORNEOS (todos logueados)
 // =========================
 router.get(
     '/torneos',
@@ -14,9 +13,8 @@ router.get(
     torneoController.listarTorneos
 );
 
-
 // =========================
-// 🔥 FORM NUEVO TORNEO  (⚠️ ANTES DE :torneo_id)
+// NUEVO TORNEO (solo admin sistema)
 // =========================
 router.get(
     '/torneos/nuevo',
@@ -25,10 +23,6 @@ router.get(
     torneoController.formNuevoTorneo
 );
 
-
-// =========================
-// 🔥 CREAR TORNEO
-// =========================
 router.post(
     '/torneos/nuevo',
     authMiddleware.verificarLogin,
@@ -36,9 +30,8 @@ router.post(
     torneoController.crearTorneo
 );
 
-
 // =========================
-// 🔥 INSCRIBIR EQUIPOS
+// INSCRIBIR EQUIPOS (solo admin)
 // =========================
 router.get(
     '/torneos/:torneo_id/inscribir',
@@ -54,9 +47,8 @@ router.post(
     torneoController.guardarInscripcion
 );
 
-
 // =========================
-// 🔥 VER FIXTURE
+// VER FIXTURE (todos)
 // =========================
 router.get(
     '/torneos/:torneo_id/fixture',
@@ -64,9 +56,25 @@ router.get(
     torneoController.verFixture
 );
 
+// =========================
+// RESULTADO PARTIDO (solo admin sistema)
+// =========================
+router.get(
+    '/partidos/:partido_id/resultado',
+    authMiddleware.verificarLogin,
+    authMiddleware.soloAdminSistema,
+    torneoController.formResultado
+);
+
+router.post(
+    '/partidos/:partido_id/resultado',
+    authMiddleware.verificarLogin,
+    authMiddleware.soloAdminSistema,
+    torneoController.guardarResultado
+);
 
 // =========================
-// 🔥 GENERAR FIXTURE
+// GENERAR FIXTURE (solo admin)
 // =========================
 router.post(
     '/torneos/:torneo_id/generar-fixture',
@@ -75,9 +83,8 @@ router.post(
     torneoController.generarFixture
 );
 
-
 // =========================
-// 🔥 VER TORNEO (⚠️ SIEMPRE AL FINAL)
+// VER TORNEO (todos)
 // =========================
 router.get(
     '/torneos/:torneo_id',

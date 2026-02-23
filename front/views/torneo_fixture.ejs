@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Fixture</title>
+</head>
+<body>
+
+<h1>Fixture - <%= torneo.nombre %></h1>
+
+<a href="/admin/torneos/<%= torneo.id %>">⬅ Volver al torneo</a>
+
+<hr>
+
+<% if (!fixture || fixture.length === 0) { %>
+
+<p>No hay partidos generados todavía.</p>
+
+<% } else { %>
+
+<ul>
+
+<%
+let fechaActual = null;
+fixture.forEach(p => {
+
+    if (fechaActual !== p.numero_fecha) {
+        fechaActual = p.numero_fecha;
+%>
+
+<h2>Fecha <%= fechaActual %></h2>
+
+<% } %>
+
+<li>
+
+<strong>
+<%= p.local_club %> (<%= p.local_categoria %>)
+vs
+<%= p.visitante_club %> (<%= p.visitante_categoria %>)
+</strong>
+
+<br>
+Estado: <%= p.estado %>
+
+<% if (p.puntos_local !== null) { %>
+<br>
+Resultado: <%= p.puntos_local %> - <%= p.puntos_visitante %>
+<% } %>
+
+<% if (Number(user.rol_id) === 1) { %>
+<br>
+<a href="/admin/partidos/<%= p.id %>/resultado">Cargar resultado</a>
+<% } %>
+
+</li>
+
+<% }) %>
+
+</ul>
+
+<% } %>
+
+</body>
+</html>
