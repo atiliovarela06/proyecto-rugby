@@ -11,4 +11,7 @@ router.post('/login', authController.login);
 // Cerrar sesión
 router.get('/logout', authController.logout);
 
+router.get('/usuarios/registro', authController.showRegistro);
+router.post('/usuarios/registro', authController.registrar);
+
 module.exports = router;

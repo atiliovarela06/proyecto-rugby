@@ -42,7 +42,13 @@
 <% }) %>
 </ul>
 
-<a href="/dashboard/admin">Volver al panel</a>
+<a <% if (Number(user.rol_id) === 1) { %>
+    <a href="/dashboard/admin">Volver</a>
+<% } else if (Number(user.rol_id) === 2) { %>
+    <a href="/dashboard/club">Volver</a>
+<% } else { %>
+    <a href="/dashboard/viewer">Volver</a>
+<% } %></a>
 
 </body>
 </html>

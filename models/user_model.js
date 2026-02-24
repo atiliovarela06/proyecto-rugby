@@ -30,7 +30,7 @@ const User = {
         }
 
         if (!rol_id) {
-            throw new Error('Rol inválido');
+            rol_id=ROLES.viewer;
         }
 
         const passwordHash = await bcrypt.hash(user.password, 10);
