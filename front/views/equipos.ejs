@@ -1,27 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Equipos</title>
+</head>
+<body>
+
 <h1>Equipos</h1>
 
-<a href="/admin/equipos/nuevo">
-    ➕ Crear equipo
-</a>
+<p>Usuario: <%= user.nombre %></p>
 
 <hr>
 
+<!-- BOTON CREAR SOLO ADMIN SISTEMA O CLUB -->
+<% if (Number(user.rol_id) === 1 || Number(user.rol_id) === 2) { %>
+    <a href="/admin/equipos/nuevo">➕ Crear equipo</a>
+<% } %>
+
+<hr>
+
+<% if (!equipos || equipos.length === 0) { %>
+
+<p>No hay equipos cargados.</p>
+
+<% } else { %>
+
 <ul>
+
 <% equipos.forEach(e => { %>
 
 <li>
-    <strong><%= e.club %></strong>
-    — <%= e.categoria %>
-    — <%= e.division %>
+<strong><%= e.club %></strong>
+— <%= e.categoria %>
+— <%= e.division || 'Sin división' %>
+— <%= e.activo ? '🟢 Activo' : '🔴 Inactivo' %>
 
-    | <a href="/admin/equipos/editar/<%= e.id %>">Editar</a>
+<!-- EDITAR SOLO ADMIN SISTEMA O CLUB -->
+<% if (Number(user.rol_id) === 1 || Number(user.rol_id) === 2) { %>
 
-    <form action="/admin/equipos/eliminar/<%= e.id %>" method="POST" style="display:inline;">
-        <button>Eliminar</button>
-    </form>
+ | <a href="/admin/equipos/editar/<%= e.id %>">Editar</a>
+
+ <form action="/admin/equipos/eliminar/<%= e.id %>" method="POST" style="display:inline;">
+    <button type="submit">Eliminar</button>
+ </form>
+
+<% } %>
+
 </li>
 
 <% }) %>
+
 </ul>
 
-<a href="/dashboard/admin">Volver</a>
+<% } %>
+
+<hr>
+
+<!-- VOLVER SEGÚN ROL -->
+<a href="<%= Number(user.rol_id) === 1 ? '/dashboard/admin' : '/dashboard/club' %>">
+⬅ Volver
+</a>
+
+</body>
+</html>

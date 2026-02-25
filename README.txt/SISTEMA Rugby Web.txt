@@ -1,0 +1,77 @@
+SISTEMA: Rugby Web
+Alumno: Atilio Varela
+Materia: Proyecto Sistemas Computacionales
+Escuela: Técnica 7 José Hernández
+Profesor: Leandro Tassone
+
+---
+
+DESCRIPCIÓN
+
+Rugby Web es un sistema web para la gestión de torneos de rugby, clubes,
+equipos y jugadores. Permite generar fixtures, cargar resultados y calcular
+automáticamente la tabla de posiciones.
+
+---
+
+REQUISITOS
+
+- Node.js instalado
+- MySQL o phpMyAdmin
+- Navegador web
+
+---
+
+INSTALACIÓN
+
+1) Importar la base de datos:
+   
+   - Abrir phpMyAdmin o MySQL
+   - Crear una base llamada: rugby_web
+   - Importar el archivo base_de_datos.sql incluido en el proyecto
+
+2) Configurar variables de entorno:
+   Editar el archivo .env con los datos de su MySQL:
+   
+   DB_HOST=localhost
+   DB_USER=root
+   DB_PASSWORD=
+   DB_NAME=rugby_web
+
+3) Instalar dependencias (si fuese necesario):
+   Abrir terminal en la carpeta del proyecto y ejecutar:
+   
+   npm install
+
+4) Ejecutar el sistema:
+   
+   node front/app.js
+
+5) Abrir en navegador:
+   
+   http://localhost:3000/login
+
+---
+
+USUARIOS Y ROLES
+
+El sistema maneja tres roles:
+
+1 - Administrador del sistema
+Puede crear torneos, generar fixtures, cargar resultados,
+administrar clubes, equipos y usuarios.
+
+2 - Administrador de club
+Puede gestionar jugadores de su club y ver torneos.
+
+3 - Viewer
+Solo puede visualizar torneos, fixture y tabla de posiciones.
+
+---
+
+NOTA SOBRE LAS CARPETAS
+
+El proyecto se entrega completo, incluyendo node_modules y demás carpetas,
+para asegurar que funcione correctamente sin necesidad de reinstalar paquetes.
+
+---

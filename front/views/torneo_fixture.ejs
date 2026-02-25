@@ -49,8 +49,18 @@ Resultado: <%= p.puntos_local %> - <%= p.puntos_visitante %>
 <% } %>
 
 <% if (Number(user.rol_id) === 1) { %>
+
 <br>
-<a href="/admin/partidos/<%= p.id %>/resultado">Cargar resultado</a>
+
+<a href="/admin/partidos/<%= p.id %>/resultado">
+Cargar resultado
+</a>
+
+<form action="/admin/partidos/<%= p.id %>/cancelar" method="POST" style="display:inline;">
+<button onclick="return confirm('¿Cancelar partido?')">
+⚠️ Cancelar partido
+</button>
+</form>
 <% } %>
 
 </li>

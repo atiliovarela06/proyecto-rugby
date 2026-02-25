@@ -1,38 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Nuevo Equipo</title>
+</head>
+<body>
+
 <h1>Nuevo Equipo</h1>
 
-<form method="POST">
+<form method="POST" action="/admin/equipos/nuevo">
 
 <label>Club</label>
 <select name="club_id">
-
 <% clubes.forEach(c => { %>
-<option value="<%= c.id %>">
-<%= c.nombre %>
-</option>
+<option value="<%= c.id %>"><%= c.nombre %></option>
 <% }) %>
-
 </select>
 
 <br><br>
 
 <label>Categoria</label>
-<input name="categoria" placeholder="Primera">
+<input name="categoria" required>
 
 <br><br>
 
 <label>Division</label>
 <select name="division_id">
-
 <% divisiones.forEach(d => { %>
-<option value="<%= d.id %>">
-<%= d.nombre %>
-</option>
+<option value="<%= d.id %>"><%= d.nombre %></option>
 <% }) %>
-
 </select>
 
 <br><br>
 
-<button>Crear</button>
+<button type="submit">Crear</button>
+
+<br><br>
+
+<label>
+<input type="checkbox" name="activo" checked>
+Equipo activo
+</label>
 
 </form>
+
+</body>
+</html>

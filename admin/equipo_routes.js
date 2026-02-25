@@ -8,7 +8,7 @@ const authMiddleware = require('../auth/auth_middleware');
 router.get(
     '/equipos',
     authMiddleware.verificarLogin,
-    authMiddleware.soloAdminSistema,
+    authMiddleware.soloAdminSistemaOClub,
     equipoController.listarEquipos
 );
 
@@ -16,7 +16,7 @@ router.get(
 router.get(
     '/equipos/nuevo',
     authMiddleware.verificarLogin,
-    authMiddleware.soloAdminSistema,
+    authMiddleware.soloAdminSistemaOClub,
     equipoController.formNuevoEquipo
 );
 
@@ -24,7 +24,7 @@ router.get(
 router.post(
     '/equipos/nuevo',
     authMiddleware.verificarLogin,
-    authMiddleware.soloAdminSistema,
+    authMiddleware.soloAdminSistemaOClub,
     equipoController.crearEquipo
 );
 
@@ -32,7 +32,7 @@ router.post(
 router.get(
     '/equipos/editar/:id',
     authMiddleware.verificarLogin,
-    authMiddleware.soloAdminSistema,
+    authMiddleware.soloAdminSistemaOClub,
     equipoController.formEditarEquipo
 );
 
@@ -40,7 +40,7 @@ router.get(
 router.post(
     '/equipos/editar/:id',
     authMiddleware.verificarLogin,
-    authMiddleware.soloAdminSistema,
+    authMiddleware.soloAdminSistemaOClub,
     equipoController.actualizarEquipo
 );
 
@@ -48,7 +48,7 @@ router.post(
 router.post(
     '/equipos/eliminar/:id',
     authMiddleware.verificarLogin,
-    authMiddleware.soloAdminSistema,
+    authMiddleware.soloAdminSistemaOClub,
     equipoController.eliminarEquipo
 );
 

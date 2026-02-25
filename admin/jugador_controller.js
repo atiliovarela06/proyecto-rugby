@@ -1,5 +1,6 @@
 const Jugador = require('../models/jugador_model');
 const Categoria = require('../models/categoria_model');
+const Auditoria = require('../models/auditoria_model');
 
 const listarJugadores = async (req, res) => {
     try {
@@ -56,10 +57,18 @@ const crearJugador = async (req, res) => {
             activo: activo ? 1 : 0
         });
 
+        // ✅ AUDITORÍA
+        await Auditoria.log(
+            req.session.user.id,
+            `Creó jugador ${nombre} ${apellido}`,
+            'jugadores'
+        );
+
         res.redirect('/admin/jugadores');
+
     } catch (error) {
         console.error('ERROR MYSQL', error.sqlMessage || error);
-        res.send(error.sqlMessage||'Error al crear jugador');
+        res.send(error.sqlMessage || 'Error al crear jugador');
     }
 };
 
@@ -80,6 +89,7 @@ const formEditarJugador = async (req, res) => {
             categorias,
             user: req.session.user
         });
+
     } catch (error) {
         console.error(error);
         res.send('Error al cargar jugador');
@@ -111,7 +121,15 @@ const editarJugador = async (req, res) => {
             activo: activo ? 1 : 0
         });
 
+        // ✅ AUDITORÍA
+        await Auditoria.log(
+            req.session.user.id,
+            `Editó jugador ${nombre} ${apellido}`,
+            'jugadores'
+        );
+
         res.redirect('/admin/jugadores');
+
     } catch (error) {
         console.error(error);
         res.send('Error al editar jugador');
@@ -125,5 +143,3 @@ module.exports = {
     formEditarJugador,
     editarJugador
 };
-
- 

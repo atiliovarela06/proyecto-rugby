@@ -1,41 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Editar Equipo</title>
+</head>
+<body>
+
 <h1>Editar Equipo</h1>
 
-<form method="POST">
+<form method="POST" action="/admin/equipos/editar/<%= equipo.id %>">
 
 <label>Club</label>
 <select name="club_id">
-
 <% clubes.forEach(c => { %>
-<option value="<%= c.id %>"
-<%= c.id === equipo.club_id ? 'selected' : '' %>>
+<option value="<%= c.id %>" <%= c.id === equipo.club_id ? 'selected' : '' %>>
 <%= c.nombre %>
 </option>
 <% }) %>
-
 </select>
 
 <br><br>
 
 <label>Categoria</label>
-<input name="categoria"
-value="<%= equipo.categoria %>">
+<input name="categoria" value="<%= equipo.categoria %>" required>
 
 <br><br>
 
 <label>Division</label>
 <select name="division_id">
-
 <% divisiones.forEach(d => { %>
-<option value="<%= d.id %>"
-<%= d.id === equipo.division_id ? 'selected' : '' %>>
+<option value="<%= d.id %>" <%= d.id === equipo.division_id ? 'selected' : '' %>>
 <%= d.nombre %>
 </option>
 <% }) %>
-
 </select>
 
 <br><br>
 
-<button>Guardar</button>
+<button type="submit">Guardar</button>
+
+<br><br>
+
+<label>
+<input type="checkbox" name="activo"
+<%= equipo.activo ? 'checked' : '' %>>
+Equipo activo
+</label>
 
 </form>
+
+</body>
+</html>

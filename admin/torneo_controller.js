@@ -13,16 +13,13 @@ exports.listarTorneos = async (req, res) => {
 
 exports.verTorneo = async (req, res) => {
     try {
-
         const { torneo_id } = req.params;
 
         const torneo = await Torneo.getById(torneo_id);
         const equipos = await Torneo.getEquiposDelTorneo(torneo_id);
         const fixture = await Torneo.getFixture(torneo_id);
 
-        // 🔥 IMPORTANTE → recalcular siempre antes de mostrar
         await Torneo.recalcularTabla(torneo_id);
-
         const tabla = await Torneo.getTabla(torneo_id);
 
         res.render('torneo_ver', {
@@ -41,7 +38,6 @@ exports.verTorneo = async (req, res) => {
 
 exports.formInscribirEquipos = async (req, res) => {
     try {
-
         const { torneo_id } = req.params;
 
         const torneo = await Torneo.getById(torneo_id);
@@ -63,7 +59,6 @@ exports.formInscribirEquipos = async (req, res) => {
 
 exports.guardarInscripcion = async (req, res) => {
     try {
-
         const { torneo_id } = req.params;
         let { equipos } = req.body;
 
@@ -71,8 +66,6 @@ exports.guardarInscripcion = async (req, res) => {
         if (!Array.isArray(equipos)) equipos = [equipos];
 
         await Torneo.inscribirEquipos(torneo_id, equipos);
-
-        // 🔥 asegurar tabla actualizada
         await Torneo.recalcularTabla(torneo_id);
 
         res.redirect(`/admin/torneos/${torneo_id}`);
@@ -85,7 +78,6 @@ exports.guardarInscripcion = async (req, res) => {
 
 exports.verFixture = async (req, res) => {
     try {
-
         const { torneo_id } = req.params;
 
         const torneo = await Torneo.getById(torneo_id);
@@ -105,7 +97,6 @@ exports.verFixture = async (req, res) => {
 
 exports.formResultado = async (req, res) => {
     try {
-
         const { partido_id } = req.params;
 
         const [[partido]] = await db.promise().query(`
@@ -145,7 +136,6 @@ exports.formResultado = async (req, res) => {
 
 exports.guardarResultado = async (req, res) => {
     try {
-
         const { partido_id } = req.params;
         const { puntos_local, puntos_visitante } = req.body;
 
@@ -155,21 +145,17 @@ exports.guardarResultado = async (req, res) => {
         );
 
         if (existe) {
-
             await db.promise().query(`
                 UPDATE resultados
                 SET puntos_local=?, puntos_visitante=?
                 WHERE partido_id=?
             `, [puntos_local, puntos_visitante, partido_id]);
-
         } else {
-
             await db.promise().query(`
                 INSERT INTO resultados
                 (partido_id, puntos_local, puntos_visitante)
                 VALUES (?, ?, ?)
             `, [partido_id, puntos_local, puntos_visitante]);
-
         }
 
         await db.promise().query(
@@ -177,15 +163,11 @@ exports.guardarResultado = async (req, res) => {
             [partido_id]
         );
 
-        // 🔥 obtener torneo
         const [[partido]] = await db.promise().query(
             "SELECT torneo_id FROM partidos WHERE id=?",
             [partido_id]
         );
 
-        if (!partido) return res.send('Partido sin torneo');
-
-        // 🔥 RECALCULAR TABLA SIEMPRE
         await Torneo.recalcularTabla(partido.torneo_id);
 
         res.redirect(`/admin/torneos/${partido.torneo_id}`);
@@ -198,7 +180,6 @@ exports.guardarResultado = async (req, res) => {
 
 exports.generarFixture = async (req, res) => {
     try {
-
         const { torneo_id } = req.params;
 
         const [equipos] = await db.promise().query(`
@@ -252,14 +233,45 @@ exports.generarFixture = async (req, res) => {
             rotacion.splice(1, 0, rotacion.pop());
         }
 
-        // 🔥 recalcular por si había resultados previos
         await Torneo.recalcularTabla(torneo_id);
-
         res.redirect(`/admin/torneos/${torneo_id}`);
 
     } catch (error) {
         console.error(error);
         res.send('Error generando fixture');
+    }
+};
+
+/* ✅ CANCELAR PARTIDO (NO SE BORRA) */
+
+exports.cancelarPartido = async (req, res) => {
+    try {
+        const { partido_id } = req.params;
+
+        const [[partido]] = await db.promise().query(
+            "SELECT torneo_id FROM partidos WHERE id=?",
+            [partido_id]
+        );
+
+        if (!partido) return res.send('Partido no encontrado');
+
+        await db.promise().query(
+            "UPDATE partidos SET estado='suspendido' WHERE id=?",
+            [partido_id]
+        );
+
+        await db.promise().query(
+            "DELETE FROM resultados WHERE partido_id=?",
+            [partido_id]
+        );
+
+        await Torneo.recalcularTabla(partido.torneo_id);
+
+        res.redirect(`/admin/torneos/${partido.torneo_id}/fixture`);
+
+    } catch (error) {
+        console.error(error);
+        res.send('Error cancelando partido');
     }
 };
 
@@ -269,7 +281,6 @@ exports.formNuevoTorneo = (req, res) => {
 
 exports.crearTorneo = async (req, res) => {
     try {
-
         const { nombre, formato, temporada } = req.body;
 
         await db.promise().query(
